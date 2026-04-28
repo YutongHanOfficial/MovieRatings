@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Leaderboard - Movie Ratings</title>
+    <link rel="icon" type="image/png" href="/images/Favicon.png">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root{
+          --bg: #0b1220; --card:#0f1724; --muted:#9aa7b2; --accent:#06b6d4; --accent-2:#8b5cf6;
+          --glass: rgba(255,255,255,0.03); --radius:14px;
+        }
+        *{box-sizing:border-box}
+        html,body {
+          height:100%;
+          margin:0;
+          font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+          color:#e6eef6;
+          background: radial-gradient(1200px 600px at 10% 10%, rgba(8,20,34,0.6), transparent), linear-gradient(180deg, #071026 0%, #06121a 60%);
+          background-attachment: fixed;
+        }
+        .wrap{max-width:1000px;margin:40px auto;padding:20px;display:flex;flex-direction:column}
+        header{display:flex;align-items:center;justify-content:space-between;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.05)}
+        .brand{display:flex;gap:12px;align-items:center}
+        .logo {width: 48px; height: 48px; border-radius: 12px; object-fit: contain;}
+        h1{margin:0;font-size:18px}
+        .small{font-size:13px;color:var(--muted)}
+        .top-actions{display:flex;gap:8px;align-items:center}
+        button{cursor:pointer;border-radius:10px;border:none;padding:8px 12px;background:var(--accent);color:#042027;font-weight:700}
+        button.ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.04)}
+        .card{background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.02));border-radius:var(--radius);padding:20px;box-shadow:0 8px 24px rgba(2,6,23,0.65);border:1px solid rgba(255,255,255,0.03)}
+        footer{text-align:center;margin-top:32px;padding-top:16px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05)}
+        .badge{background:rgba(255,255,255,0.06);padding:4px 8px;border-radius:999px;font-weight:700;font-size:12px;color:#d9f7ff}
+        .avatar{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#111827,#0b1220);display:inline-grid;place-items:center;font-weight:800;color:var(--muted);font-size:18px}
+        .rater-item{display:flex;align-items:center;gap:16px;padding:16px;border-bottom:1px solid rgba(255,255,255,0.04)}
+        .rater-item:last-child{border-bottom:none}
+        .rater-rank{font-size:24px;font-weight:800;color:var(--accent);min-width:40px;text-align:center}
+        .rater-info{flex:1}
+        .rater-name{font-weight:700;font-size:16px;margin:0}
+        .rater-count{color:var(--muted);font-size:13px}
+        nav{display:flex;gap:12px;align-items:center}
+        nav a{color:var(--muted);text-decoration:none;cursor:pointer;font-size:14px;padding:6px 12px;border-radius:8px;transition:all 0.2s}
+        nav a.active{color:var(--accent);font-weight:700}
+        nav a:hover{background:rgba(255,255,255,0.05)}
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <div class="brand">
+                <img src="images/Favicon.png" alt="Logo" class="logo">
+                <div>
+                    <h1>Leaderboard</h1>
+                    <div class="small">Top Raters</div>
+                </div>
+            </div>
+            <nav id="nav"></nav>
+            <div class="top-actions">
+                <div id="signedOutControls">
+                    <button id="signInBtn">Sign in</button>
+                </div>
+                <div id="signedInControls" style="display:none;align-items:center;gap:8px">
+                    <div class="small" id="userName">—</div>
+                    <button id="signOutBtn" class="ghost">Sign out</button>
+                </div>
+            </div>
+        </header>
+
+        <main style="flex:1;">
+            <div class="card">
+                <h2 style="margin-top:0">Most Active Raters</h2>
+                <div id="leaderboardList"></div>
+            </div>
+        </main>
+
+        <footer>© 2025 Movie Ratings</footer>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyDPcQhADbFJzw54YLCMPKreZKKLmL1SRW8",
+          authDomain: "the-movie-ratings.firebaseapp.com",
+          databaseURL: "https://the-movie-ratings-default-rtdb.firebaseio.com",
+          projectId: "the-movie-ratings",
+          storageBucket: "the-movie-ratings.firebasestorage.app",
+          messagingSenderId: "208532935279",
+          appId: "1:208532935279:web:875fc444e712c75667b39a",
+          measurementId: "G-6582T4SZKR"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        const escapeHtml = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+        let currentUser = null;
+        let currentVerified = {};
+
+        const refs = {
+          signInBtn: document.getElementById('signInBtn'),
+          signOutBtn: document.getElementById('signOutBtn'),
+          signedInControls: document.getElementById('signedInControls'),
+          signedOutControls: document.getElementById('signedOutControls'),
+          userName: document.getElementById('userName'),
+          leaderboardList: document.getElementById('leaderboardList'),
+          nav: document.getElementById('nav'),
+        };
+
+        refs.signInBtn.addEventListener('click', async () => {
+          try { await signInWithPopup(auth, provider); } catch (e) { alert('Sign-in failed: ' + e.message); }
+        });
+        refs.signOutBtn.addEventListener('click', async () => { await signOut(auth); });
+
+        function updateNav() {
+          refs.nav.innerHTML = '';
+          const homeLink = document.createElement('a');
+          homeLink.href = 'index.html';
+          homeLink.textContent = '🏠 Home';
+
+          const leaderboardLink = document.createElement('a');
+          leaderboardLink.href = 'leaderboard.html';
+          leaderboardLink.textContent = '⭐ Leaderboard';
+          leaderboardLink.classList.add('active');
+
+          refs.nav.appendChild(homeLink);
+          refs.nav.appendChild(leaderboardLink);
+
+          if (currentUser) {
+            onValue(ref(db, 'verifiedUsers'), async snapshot => {
+              const verified = await checkVerified(currentUser);
+              if (verified) {
+                const addMovieLink = document.createElement('a');
+                addMovieLink.href = 'add-movie.html';
+                addMovieLink.textContent = '➕ Add Movie';
+                refs.nav.appendChild(addMovieLink);
+              }
+            });
+          }
+        }
+
+        async function checkVerified(user) {
+          if (!user) return false;
+          const uidKey = user.uid;
+          const safeEmailKey = (user.email || '').replace('.', '_dot_');
+          if (currentVerified[uidKey]) return true;
+          if (currentVerified[safeEmailKey]) return true;
+          if (currentVerified[user.email]) return true;
+          return false;
+        }
+
+        function renderLeaderboard() {
+          onValue(ref(db, 'raterIndex'), snapshot => {
+            const val = snapshot.val() || {};
+            const arr = Object.entries(val).map(([uid, data]) => ({ uid, ...data }));
+            arr.sort((a, b) => (b.count || 0) - (a.count || 0));
+
+            refs.leaderboardList.innerHTML = '';
+            if (arr.length === 0) {
+              refs.leaderboardList.innerHTML = '<div class="small" style="padding:12px">No raters yet.</div>';
+              return;
+            }
+
+            arr.forEach((r, index) => {
+              const el = document.createElement('div');
+              el.className = 'rater-item';
+              const medals = ['🥇', '🥈', '🥉'];
+              const medal = index < 3 ? medals[index] : `${index + 1}.`;
+              el.innerHTML = `
+                <div class="rater-rank">${medal}</div>
+                <div class="avatar">${escapeHtml((r.displayName||r.email||r.uid).slice(0,2).toUpperCase())}</div>
+                <div class="rater-info">
+                  <p class="rater-name">${escapeHtml(r.displayName || r.email || r.uid)} ${currentVerified[r.uid] || currentVerified[(r.email||'').replace('.', '_dot_')] || currentVerified[r.email] ? '<span class="badge">✔</span>' : ''}</p>
+                  <p class="rater-count">${r.count || 0} rating${(r.count || 0) !== 1 ? 's' : ''}</p>
+                </div>
+              `;
+              refs.leaderboardList.appendChild(el);
+            });
+          });
+        }
+
+        onAuthStateChanged(auth, user => {
+          currentUser = user;
+          if (user) {
+            refs.signedOutControls.style.display = 'none';
+            refs.signedInControls.style.display = 'flex';
+            refs.userName.textContent = user.displayName || user.email || user.uid;
+          } else {
+            refs.signedOutControls.style.display = 'flex';
+            refs.signedInControls.style.display = 'none';
+            refs.userName.textContent = '—';
+          }
+          updateNav();
+        });
+
+        onValue(ref(db, 'verifiedUsers'), snapshot => {
+          currentVerified = snapshot.val() || {};
+        });
+
+        renderLeaderboard();
+        updateNav();
+    </script>
+</body>
+
+</html>
