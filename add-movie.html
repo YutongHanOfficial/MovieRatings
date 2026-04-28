@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Add Movie - Movie Ratings</title>
+    <link rel="icon" type="image/png" href="/images/Favicon.png">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root{
+          --bg: #0b1220; --card:#0f1724; --muted:#9aa7b2; --accent:#06b6d4; --accent-2:#8b5cf6;
+          --glass: rgba(255,255,255,0.03); --radius:14px;
+        }
+        *{box-sizing:border-box}
+        html,body {
+          height:100%;
+          margin:0;
+          font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+          color:#e6eef6;
+          background: radial-gradient(1200px 600px at 10% 10%, rgba(8,20,34,0.6), transparent), linear-gradient(180deg, #071026 0%, #06121a 60%);
+          background-attachment: fixed;
+        }
+        .wrap{max-width:600px;margin:40px auto;padding:20px;display:flex;flex-direction:column}
+        header{display:flex;align-items:center;justify-content:space-between;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.05)}
+        .brand{display:flex;gap:12px;align-items:center}
+        .logo {width: 48px; height: 48px; border-radius: 12px; object-fit: contain;}
+        h1{margin:0;font-size:18px}
+        .small{font-size:13px;color:var(--muted)}
+        .top-actions{display:flex;gap:8px;align-items:center}
+        button{cursor:pointer;border-radius:10px;border:none;padding:8px 12px;background:var(--accent);color:#042027;font-weight:700}
+        button.ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.04)}
+        .card{background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.02));border-radius:var(--radius);padding:20px;box-shadow:0 8px 24px rgba(2,6,23,0.65);border:1px solid rgba(255,255,255,0.03)}
+        input[type="text"],input[type="search"],textarea{width:100%;background:var(--glass);border:1px solid rgba(255,255,255,0.04);color:inherit;padding:12px;border-radius:10px;outline:none;font-family:inherit;font-size:14px;margin-bottom:12px}
+        textarea{min-height:120px;resize:vertical}
+        .form-group{margin-bottom:16px}
+        label{display:block;font-weight:700;font-size:14px;color:var(--accent);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.3px}
+        .form-group + .form-group{margin-top:16px}
+        .button-group{display:flex;gap:8px;margin-top:20px}
+        .button-group button{flex:1}
+        footer{text-align:center;margin-top:32px;color:var(--muted);font-size:13px}
+        .alert{padding:12px;border-radius:10px;margin-bottom:12px;font-size:14px}
+        .alert.error{background:rgba(255,107,107,0.1);color:#ff6b6b;border:1px solid rgba(255,107,107,0.3)}
+        .alert.success{background:rgba(0,196,140,0.1);color:#00c48c;border:1px solid rgba(0,196,140,0.3)}
+        .alert.info{background:rgba(6,182,212,0.1);color:#06b6d4;border:1px solid rgba(6,182,212,0.3)}
+        nav{display:flex;gap:12px;align-items:center}
+        nav a{color:var(--muted);text-decoration:none;cursor:pointer;font-size:14px;padding:6px 12px;border-radius:8px;transition:all 0.2s}
+        nav a:hover{background:rgba(255,255,255,0.05)}
+        .badge{background:rgba(255,255,255,0.06);padding:4px 8px;border-radius:999px;font-weight:700;font-size:12px;color:#d9f7ff}
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <div class="brand">
+                <img src="images/Favicon.png" alt="Logo" class="logo">
+                <div>
+                    <h1>Add Movie</h1>
+                    <div class="small">Verified users only</div>
+                </div>
+            </div>
+            <nav id="nav"></nav>
+            <div class="top-actions">
+                <div id="signedOutControls">
+                    <button id="signInBtn">Sign in</button>
+                </div>
+                <div id="signedInControls" style="display:none;align-items:center;gap:8px">
+                    <div class="small" id="userName">—</div>
+                    <div id="verifiedBadge"></div>
+                    <button id="signOutBtn" class="ghost">Sign out</button>
+                </div>
+            </div>
+        </header>
+
+        <main style="flex:1;">
+            <div id="accessDenied" style="display:none;">
+                <div class="card">
+                    <h2>Access Denied</h2>
+                    <p class="small">You must be signed in and verified to add movies. <a href="index.html" style="color:var(--accent);text-decoration:underline;">Return to home</a></p>
+                </div>
+            </div>
+
+            <div id="form" style="display:none;">
+                <div class="card">
+                    <h2 style="margin-top:0;">Submit a New Movie</h2>
+                    <div id="message"></div>
+
+                    <div class="form-group">
+                        <label for="movieTitle">Movie Title *</label>
+                        <input type="text" id="movieTitle" placeholder="e.g., The Shawshank Redemption" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="movieYear">Release Year (optional)</label>
+                        <input type="text" id="movieYear" placeholder="e.g., 1994">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="moviePoster">Poster URL (optional)</label>
+                        <input type="text" id="moviePoster" placeholder="e.g., https://example.com/poster.jpg">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="movieDescription">Description (optional)</label>
+                        <textarea id="movieDescription" placeholder="What's this movie about?"></textarea>
+                    </div>
+
+                    <div class="button-group">
+                        <button onclick="window.history.back()" class="ghost">Cancel</button>
+                        <button id="submitBtn">Add Movie</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>© 2025 Movie Ratings</footer>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+        import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyDPcQhADbFJzw54YLCMPKreZKKLmL1SRW8",
+          authDomain: "the-movie-ratings.firebaseapp.com",
+          databaseURL: "https://the-movie-ratings-default-rtdb.firebaseio.com",
+          projectId: "the-movie-ratings",
+          storageBucket: "the-movie-ratings.firebasestorage.app",
+          messagingSenderId: "208532935279",
+          appId: "1:208532935279:web:875fc444e712c75667b39a",
+          measurementId: "G-6582T4SZKR"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        const nowISO = () => new Date().toISOString();
+        const slugify = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+        let currentUser = null;
+        let currentVerified = {};
+
+        const refs = {
+          signInBtn: document.getElementById('signInBtn'),
+          signOutBtn: document.getElementById('signOutBtn'),
+          signedInControls: document.getElementById('signedInControls'),
+          signedOutControls: document.getElementById('signedOutControls'),
+          userName: document.getElementById('userName'),
+          verifiedBadge: document.getElementById('verifiedBadge'),
+          form: document.getElementById('form'),
+          accessDenied: document.getElementById('accessDenied'),
+          movieTitle: document.getElementById('movieTitle'),
+          movieYear: document.getElementById('movieYear'),
+          moviePoster: document.getElementById('moviePoster'),
+          movieDescription: document.getElementById('movieDescription'),
+          submitBtn: document.getElementById('submitBtn'),
+          message: document.getElementById('message'),
+          nav: document.getElementById('nav'),
+        };
+
+        refs.signInBtn.addEventListener('click', async () => {
+          try { await signInWithPopup(auth, provider); } catch (e) { alert('Sign-in failed: ' + e.message); }
+        });
+        refs.signOutBtn.addEventListener('click', async () => { await signOut(auth); });
+
+        function updateNav() {
+          refs.nav.innerHTML = '';
+          const homeLink = document.createElement('a');
+          homeLink.href = 'index.html';
+          homeLink.textContent = '🏠 Home';
+
+          const leaderboardLink = document.createElement('a');
+          leaderboardLink.href = 'leaderboard.html';
+          leaderboardLink.textContent = '⭐ Leaderboard';
+
+          refs.nav.appendChild(homeLink);
+          refs.nav.appendChild(leaderboardLink);
+
+          if (currentUser) {
+            const addMovieLink = document.createElement('a');
+            addMovieLink.href = 'add-movie.html';
+            addMovieLink.textContent = '➕ Add Movie';
+            addMovieLink.classList.add('active');
+            refs.nav.appendChild(addMovieLink);
+          }
+        }
+
+        async function checkAccess() {
+          if (!currentUser) {
+            refs.form.style.display = 'none';
+            refs.accessDenied.style.display = 'block';
+            return false;
+          }
+
+          const verified = await checkVerified(currentUser);
+          if (!verified) {
+            refs.form.style.display = 'none';
+            refs.accessDenied.style.display = 'block';
+            return false;
+          }
+
+          refs.form.style.display = 'block';
+          refs.accessDenied.style.display = 'none';
+          return true;
+        }
+
+        async function checkVerified(user) {
+          if (!user) return false;
+          const uidKey = user.uid;
+          const safeEmailKey = (user.email || '').replace('.', '_dot_');
+          if (currentVerified[uidKey]) return true;
+          if (currentVerified[safeEmailKey]) return true;
+          if (currentVerified[user.email]) return true;
+          return false;
+        }
+
+        function renderVerifiedBadge(isVerified) {
+          refs.verifiedBadge.innerHTML = isVerified ? '<div class="badge">✔ Verified</div>' : '';
+        }
+
+        function showMessage(text, type = 'info') {
+          refs.message.innerHTML = `<div class="alert ${type}">${text}</div>`;
+        }
+
+        onAuthStateChanged(auth, user => {
+          currentUser = user;
+          if (user) {
+            refs.signedOutControls.style.display = 'none';
+            refs.signedInControls.style.display = 'flex';
+            refs.userName.textContent = user.displayName || user.email || user.uid;
+            checkVerified(user).then(v => renderVerifiedBadge(v));
+          } else {
+            refs.signedOutControls.style.display = 'flex';
+            refs.signedInControls.style.display = 'none';
+            refs.userName.textContent = '—';
+            renderVerifiedBadge(false);
+          }
+          checkAccess();
+          updateNav();
+        });
+
+        onValue(ref(db, 'verifiedUsers'), snapshot => {
+          currentVerified = snapshot.val() || {};
+        });
+
+        refs.submitBtn.addEventListener('click', async () => {
+          const title = refs.movieTitle.value.trim();
+          const year = refs.movieYear.value.trim();
+          const poster = refs.moviePoster.value.trim();
+          const description = refs.movieDescription.value.trim();
+
+          if (!title) {
+            showMessage('Please enter a movie title', 'error');
+            return;
+          }
+
+          if (!currentUser) {
+            showMessage('You must be signed in', 'error');
+            return;
+          }
+
+          const verified = await checkVerified(currentUser);
+          if (!verified) {
+            showMessage('Only verified users can add movies', 'error');
+            return;
+          }
+
+          try {
+            refs.submitBtn.disabled = true;
+            showMessage('Adding movie...', 'info');
+
+            const slug = slugify(title + (year ? '-' + year : ''));
+            const mRef = ref(db, `movies/${slug}`);
+            const snapshot = await get(mRef);
+
+            if (snapshot.exists()) {
+              showMessage('A movie with this title already exists', 'error');
+              refs.submitBtn.disabled = false;
+              return;
+            }
+
+            await set(mRef, {
+              id: slug,
+              title,
+              year: year || '',
+              poster: poster || '',
+              description: description || '',
+              createdAt: nowISO(),
+              addedBy: currentUser.uid,
+              verifiedAdder: true
+            });
+
+            showMessage('Movie added successfully! 🎉', 'success');
+            refs.movieTitle.value = '';
+            refs.movieYear.value = '';
+            refs.moviePoster.value = '';
+            refs.movieDescription.value = '';
+            setTimeout(() => { window.location.href = 'index.html'; }, 1500);
+          } catch (err) {
+            console.error(err);
+            showMessage('Error adding movie: ' + err.message, 'error');
+            refs.submitBtn.disabled = false;
+          }
+        });
+
+        updateNav();
+    </script>
+</body>
+
+</html>
