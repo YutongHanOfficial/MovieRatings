@@ -4,13 +4,12 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Movie Ratings</title>
+    <title>Movie Ratings - Discover & Rate Films</title>
     <link rel="icon" type="image/png" href="/images/Favicon.png">
-    <meta name="description" content="Movie Ratings is redefining how the world experiences film. Discover, rate, and discuss movies with a global community of fans — all on one powerful, immersive platform." />
+    <meta name="description" content="Movie Ratings is redefining how the world experiences film. Discover, rate, and discuss movies with a global community of fans." />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-
         #modalBackdrop {
           display: none;
           position: fixed;
@@ -19,195 +18,169 @@
           z-index: 9998;
           backdrop-filter: blur(4px);
         }
-           :root{
-           --bg: #0b1220; --card:#0f1724; --muted:#9aa7b2; --accent:#06b6d4; --accent-2:#8b5cf6;
-           --glass: rgba(255,255,255,0.03); --radius:14px;
-           --success: #00c48c; --danger:#ff6b6b;
-           color-scheme: dark;
-           }
-           *{box-sizing:border-box}
-           html,body {
-           height:100%;
-           margin:0;
-           font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
-           color:#e6eef6;
-           background:
-           radial-gradient(1200px 600px at 10% 10%, rgba(8,20,34,0.6), transparent),
-           linear-gradient(180deg, #071026 0%, #06121a 60%);
-           background-attachment: fixed;
-           background-repeat: no-repeat;
-           background-size: cover;
-           background-position: bottom center;
-           }
-           .wrap{max-width:1100px;margin:28px auto;padding:20px;display:grid;grid-template-columns:1fr 360px;gap:20px}
-           header{grid-column:1 / -1;display:flex;align-items:center;justify-content:space-between;padding-bottom:8px}
-           .brand{display:flex;gap:12px;align-items:center}
-
-           .logo {
-           width: 48px;
-           height: 48px;
-           border-radius: 12px;
-           object-fit: contain;
-           box-shadow: none;
-           background: none;
-           }
-           h1{margin:0;font-size:18px}
-           .top-actions{display:flex;gap:8px;align-items:center}
-           button{cursor:pointer;border-radius:10px;border:none;padding:8px 12px;background:var(--accent);color:#042027;font-weight:700}
-           button.ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.04)}
-           .card{background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.02));border-radius:var(--radius);padding:16px;box-shadow:0 8px 24px rgba(2,6,23,0.65);border:1px solid rgba(255,255,255,0.03)}
-           .expanded-panel {
-           background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-           border: 1px solid rgba(255,255,255,0.05);
-           border-radius: var(--radius);
-           padding: 18px 20px;
-           margin-top: 10px;
-           box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-           }
-           .expanded-panel > * + * {
-           margin-top: 14px;
-           }
-           .expanded-stats {
-           display: flex;
-           flex-direction: column;
-           gap: 10px;
-           padding: 10px 0;
-           border-top: 1px solid rgba(255,255,255,0.05);
-           border-bottom: 1px solid rgba(255,255,255,0.05);
-           }
-           .expanded-stats .summary {
-           display: flex;
-           align-items: center;
-           gap: 12px;
-           flex-wrap: wrap;
-           }
-           .expanded-stats .expanded-breakdown {
-           display: flex;
-           flex-wrap: wrap;
-           gap: 6px;
-           }
-           .expanded-form {
-           display: flex;
-           flex-direction: column;
-           gap: 10px;
-           background: rgba(255,255,255,0.02);
-           border-radius: 10px;
-           padding: 12px;
-           border: 1px solid rgba(255,255,255,0.04);
-           }
-           .expanded-form .stars-container {
-           display: flex;
-           flex-wrap: wrap;
-           gap: 6px;
-           }
-           .expanded-form textarea {
-           margin-top: 6px;
-           }
-           .expanded-list {
-           display: flex;
-           flex-direction: column;
-           gap: 8px;
-           padding-top: 10px;
-           }
-           .expanded-list .rating-item {
-           background: rgba(255,255,255,0.02);
-           border-radius: 8px;
-           padding: 10px;
-           display: flex;
-           gap: 10px;
-           align-items: flex-start;
-           }
-           .expanded-list .rating-item .avatar {
-           flex-shrink: 0;
-           width: 40px;
-           height: 40px;
-           border-radius: 8px;
-           background: linear-gradient(135deg,#111827,#0b1220);
-           display: grid;
-           place-items: center;
-           font-weight: 700;
-           color: var(--muted);
-           }
-           .left{min-height:60vh}
-           .controls{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
-
-           .movie-search-bar {
-           width: 100%;
-           display: flex;
-           flex-direction: column;
-           margin-bottom: 14px;
-           }
-           .search-label {
-           font-weight: 700;
-           font-size: 14px;
-           color: var(--accent);
-           margin-bottom: 6px;
-           letter-spacing: 0.3px;
-           text-transform: uppercase;
-           }
-           .movie-search-bar input[type="search"] {
-           width: 100%;
-           font-size: 15px;
-           padding: 12px;
-           border-radius: 12px;
-           background: rgba(255,255,255,0.04);
-           border: 1px solid rgba(255,255,255,0.1);
-           }
-           .movie-add-row {
-           width: 100%;
-           display: grid;
-           grid-template-columns: 1fr 120px 1fr auto;
-           gap: 10px;
-           }
-           .movie-add-row input[type="text"] {
-           padding: 10px;
-           border-radius: 10px;
-           }
-           .movie-add-row button {
-           background: var(--accent);
-           color: #041820;
-           border: none;
-           border-radius: 10px;
-           font-weight: 700;
-           cursor: pointer;
-           transition: background 0.2s ease;
-           }
-           .movie-add-row button:hover {
-           background: var(--accent-2);
-           }
-           input[type="text"], input[type="search"], select, textarea{background:var(--glass);border:1px solid rgba(255,255,255,0.04);color:inherit;padding:10px;border-radius:10px;outline:none}
-           textarea{min-height:84px;resize:vertical}
-           .movie-list{display:grid;gap:12px;margin-top:10px}
-           .movie-row{display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);cursor:pointer}
-           .poster{width:72px;height:104px;border-radius:8px;background:linear-gradient(180deg,#071026,#0b1220);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--muted);font-size:20px}
-           .poster-img {
-           width: 72px;
-           height: 104px;
-           object-fit: cover;
-           border-radius: 8px;
-           flex-shrink: 0;
-           box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-           }
-           .meta{flex:1;display:flex;flex-direction:column}
-           .title-row{display:flex;justify-content:space-between;align-items:center;gap:8px}
-           .movie-title{font-size:16px;margin:0}
-           .small{font-size:13px;color:var(--muted)}
-           .rating-block{display:flex;gap:8px;align-items:center}
-           .avg{font-weight:800;font-size:18px}
-           .stars{display:flex;gap:6px;align-items:center}
-           .star{width:26px;height:26px;display:inline-grid;place-items:center;border-radius:6px;cursor:pointer;user-select:none}
-           .star.on{background:linear-gradient(180deg,var(--accent),#07a3b5);color:#012}
-           .right{min-width:260px}
-           .top-raters .rater{display:flex;align-items:center;gap:10px;padding:8px;border-radius:8px}
-           .avatar{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,#111827,#0b1220);display:inline-grid;place-items:center;font-weight:800;color:var(--muted)}
-           footer{grid-column:1 / -1;text-align:center;margin-top:12px;color:var(--muted);font-size:13px}
-           .badge{background:rgba(255,255,255,0.06);padding:4px 8px;border-radius:999px;font-weight:700;font-size:12px;color:#d9f7ff}
-
-           #editNameModal .card { box-shadow: 0 8px 30px rgba(0,0,0,0.6); }
-           #editNameModal input { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); color: inherit; }
-           #editNameMsg { color: var(--accent); } 
-           @media (max-width:980px){.wrap{grid-template-columns:1fr;padding:12px}.right{order:3}}
-    </style> <!-- AdSense code snippet -->
+        :root{
+          --bg: #0b1220; --card:#0f1724; --muted:#9aa7b2; --accent:#06b6d4; --accent-2:#8b5cf6;
+          --glass: rgba(255,255,255,0.03); --radius:14px;
+          --success: #00c48c; --danger:#ff6b6b;
+          color-scheme: dark;
+        }
+        *{box-sizing:border-box}
+        html,body {
+          height:100%;
+          margin:0;
+          font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+          color:#e6eef6;
+          background: radial-gradient(1200px 600px at 10% 10%, rgba(8,20,34,0.6), transparent), linear-gradient(180deg, #071026 0%, #06121a 60%);
+          background-attachment: fixed;
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-position: bottom center;
+        }
+        .wrap{max-width:1100px;margin:28px auto;padding:20px;display:flex;flex-direction:column}
+        header{display:flex;align-items:center;justify-content:space-between;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.05)}
+        .brand{display:flex;gap:12px;align-items:center}
+        .logo {
+          width: 48px;
+          height: 48px;
+          border-radius: 12px;
+          object-fit: contain;
+          box-shadow: none;
+          background: none;
+        }
+        h1{margin:0;font-size:18px}
+        .top-actions{display:flex;gap:8px;align-items:center}
+        button{cursor:pointer;border-radius:10px;border:none;padding:8px 12px;background:var(--accent);color:#042027;font-weight:700}
+        button.ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.04)}
+        .card{background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.02));border-radius:var(--radius);padding:16px;box-shadow:0 8px 24px rgba(2,6,23,0.65);border:1px solid rgba(255,255,255,0.03)}
+        .expanded-panel {
+          background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+          border: 1px solid rgba(255,255,255,0.05);
+          border-radius: var(--radius);
+          padding: 18px 20px;
+          margin-top: 10px;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+        .expanded-stats {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          padding: 10px 0;
+          border-top: 1px solid rgba(255,255,255,0.05);
+          border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .expanded-stats .summary {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          flex-wrap: wrap;
+        }
+        .expanded-stats .expanded-breakdown {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+        }
+        .expanded-form {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          background: rgba(255,255,255,0.02);
+          border-radius: 10px;
+          padding: 12px;
+          border: 1px solid rgba(255,255,255,0.04);
+        }
+        .expanded-form .stars-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+        }
+        .expanded-form textarea {
+          margin-top: 6px;
+        }
+        .expanded-list {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          padding-top: 10px;
+        }
+        .expanded-list .rating-item {
+          background: rgba(255,255,255,0.02);
+          border-radius: 8px;
+          padding: 10px;
+          display: flex;
+          gap: 10px;
+          align-items: flex-start;
+        }
+        .expanded-list .rating-item .avatar {
+          flex-shrink: 0;
+          width: 40px;
+          height: 40px;
+          border-radius: 8px;
+          background: linear-gradient(135deg,#111827,#0b1220);
+          display: grid;
+          place-items: center;
+          font-weight: 700;
+          color: var(--muted);
+        }
+        .main-content{flex:1;display:grid;grid-template-columns:1fr}
+        .controls{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+        .search-bar {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 14px;
+        }
+        .search-label {
+          font-weight: 700;
+          font-size: 14px;
+          color: var(--accent);
+          margin-bottom: 6px;
+          letter-spacing: 0.3px;
+          text-transform: uppercase;
+        }
+        .search-bar input[type="search"] {
+          width: 100%;
+          font-size: 15px;
+          padding: 12px;
+          border-radius: 12px;
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.1);
+        }
+        input[type="text"], input[type="search"], select, textarea{background:var(--glass);border:1px solid rgba(255,255,255,0.04);color:inherit;padding:10px;border-radius:10px;outline:none}
+        textarea{min-height:84px;resize:vertical}
+        .movie-list{display:grid;gap:12px;margin-top:10px}
+        .movie-row{display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);cursor:pointer}
+        .poster{width:72px;height:104px;border-radius:8px;background:linear-gradient(180deg,#071026,#0b1220);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--muted);font-size:20px}
+        .poster-img {
+          width: 72px;
+          height: 104px;
+          object-fit: cover;
+          border-radius: 8px;
+          flex-shrink: 0;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+        .meta{flex:1;display:flex;flex-direction:column}
+        .title-row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+        .movie-title{font-size:16px;margin:0}
+        .small{font-size:13px;color:var(--muted)}
+        .avg{font-weight:800;font-size:18px}
+        .stars{display:flex;gap:6px;align-items:center}
+        .star{width:26px;height:26px;display:inline-grid;place-items:center;border-radius:6px;cursor:pointer;user-select:none}
+        .star.on{background:linear-gradient(180deg,var(--accent),#07a3b5);color:#012}
+        .avatar{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,#111827,#0b1220);display:inline-grid;place-items:center;font-weight:800;color:var(--muted)}
+        footer{text-align:center;margin-top:32px;padding-top:16px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.05)}
+        .badge{background:rgba(255,255,255,0.06);padding:4px 8px;border-radius:999px;font-weight:700;font-size:12px;color:#d9f7ff}
+        .pagination{display:flex;gap:8px;justify-content:center;align-items:center;margin:24px 0}
+        .pagination button,.pagination span{padding:8px 12px;border-radius:8px;border:none;background:transparent;color:var(--muted);cursor:pointer}
+        .pagination button.active,.pagination button:hover{background:var(--accent);color:#041820;font-weight:700}
+        .pagination span{font-weight:700;color:var(--accent)}
+        nav{display:flex;gap:12px;align-items:center}
+        nav a{color:var(--muted);text-decoration:none;cursor:pointer;font-size:14px;padding:6px 12px;border-radius:8px;transition:all 0.2s}
+        nav a.active{color:var(--accent);font-weight:700}
+        nav a:hover{background:rgba(255,255,255,0.05)}
+        #editNameModal .card { box-shadow: 0 8px 30px rgba(0,0,0,0.6); }
+        #editNameModal input { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); color: inherit; }
+        #editNameMsg { color: var(--accent); }
+    </style>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2342721268649961" crossorigin="anonymous"></script>
 </head>
 
@@ -215,150 +188,77 @@
     <div id="modalBackdrop"></div>
     <div class="wrap" id="app">
         <header>
-            <div class="brand"> <img src="images/Favicon.png" alt="Movie Ratings Logo" class="logo">
+            <div class="brand">
+                <img src="images/Favicon.png" alt="Movie Ratings Logo" class="logo">
                 <div>
                     <h1>Movie Ratings</h1>
                     <div class="small">Verified Movie Ratings</div>
                 </div>
             </div>
+            <nav id="nav"></nav>
             <div class="top-actions">
-                <div id="signedOutControls"> <button id="signInBtn">Sign in with Google</button> </div>
+                <div id="signedOutControls">
+                    <button id="signInBtn">Sign in with Google</button>
+                </div>
                 <div id="signedInControls" style="display:none;align-items:center;gap:8px">
                     <div class="small" id="userName">—</div>
-                    <div id="verifiedBadge"></div> <!-- EDIT USERNAME BUTTON --> <button id="editNameBtn" class="ghost" title="Change your display name">Edit name</button> <!-- Inline modal / popover for editing username (hidden by default) -->
+                    <div id="verifiedBadge"></div>
+                    <button id="editNameBtn" class="ghost" title="Change your display name">Edit name</button>
                     <div id="editNameModal" style="display:none;position:fixed;right:20px;top:84px;z-index:9999">
                         <div class="card" style="min-width:320px;padding:12px;">
-                            <div style="display:flex;justify-content:space-between;align-items:center"> <strong>Change display name</strong> <button id="closeEditName" class="ghost" style="padding:6px 8px">×</button> </div>
-                            <div style="height:8px"></div> <input id="editNameInput" type="text" placeholder="New display name" style="width:100%;padding:8px;border-radius:8px" />
+                            <div style="display:flex;justify-content:space-between;align-items:center">
+                                <strong>Change display name</strong>
+                                <button id="closeEditName" class="ghost" style="padding:6px 8px">×</button>
+                            </div>
                             <div style="height:8px"></div>
-                            <div style="display:flex;gap:8px;justify-content:flex-end"> <button id="cancelEditName" class="ghost">Cancel</button> <button id="saveEditName">Save</button> </div>
+                            <input id="editNameInput" type="text" placeholder="New display name" style="width:100%;padding:8px;border-radius:8px" />
+                            <div style="height:8px"></div>
+                            <div style="display:flex;gap:8px;justify-content:flex-end">
+                                <button id="cancelEditName" class="ghost">Cancel</button>
+                                <button id="saveEditName">Save</button>
+                            </div>
                             <div id="editNameMsg" class="small" style="margin-top:8px;color:var(--muted);display:none"></div>
                         </div>
-                    </div> <button id="signOutBtn" class="ghost">Sign out</button>
+                    </div>
+                    <button id="signOutBtn" class="ghost">Sign out</button>
                 </div>
             </div>
-        </header> <!-- Left column -->
-        <main class="left">
+        </header>
+
+        <main class="main-content">
             <div class="card">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"> <strong>Add / Find a Movie</strong> <small class="small">Leave a review!</small> </div> <!-- UPDATED CONTROLS SECTION -->
-                <div class="controls" role="group" aria-label="movie controls">
-                    <!-- Full-width Movie Search Bar -->
-                    <div class="movie-search-bar"> <label for="searchInput" class="search-label">🎬 Movie Search</label> <input type="search" id="searchInput" placeholder="Search movies by title..." /> </div> <!-- Second Row for Adding a New Movie -->
-                    <div class="movie-add-row"> <input type="text" id="newTitle" placeholder="Movie title (required)" /> <input type="text" id="newYear" placeholder="Year (optional)" /> <input type="text" id="newPoster" placeholder="Poster URL (optional)" /> <button id="addMovieBtn">Add / Select</button> </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+                    <strong>Browse Movies</strong>
+                    <small class="small">Leave a review!</small>
                 </div>
-                <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
-                    <div class="small">Sort:</div> <select id="sortSelect">
+                <div class="controls" role="group" aria-label="movie controls">
+                    <div class="search-bar">
+                        <label for="searchInput" class="search-label">🎬 Movie Search</label>
+                        <input type="search" id="searchInput" placeholder="Search movies by title..." />
+                    </div>
+                </div>
+                <div style="display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap">
+                    <div class="small">Sort:</div>
+                    <select id="sortSelect">
                         <option value="avg">Highest rated</option>
                         <option value="recent">Most recent</option>
                         <option value="count">Most rated</option>
                         <option value="title">Title A–Z</option>
                     </select>
-                    <div style="flex:1"></div>
-                    <div class="small">Show verified-only</div> <input type="checkbox" id="verifiedOnly" />
+                    <div class="small">Show verified-only</div>
+                    <input type="checkbox" id="verifiedOnly" />
                 </div>
                 <div class="movie-list" id="movieList" aria-live="polite"></div>
+                <div class="pagination" id="pagination"></div>
             </div>
-            <div style="height:12px"></div>
-            <!-- Old
-               <div class="card" id="selectedCard" aria-hidden="true" style="display:none">
-                 <strong id="selectedTitle">Selected</strong>
-                 <div class="small" id="selectedSubtitle">Movie info</div>
-                 <div style="height:12px"></div>
+        </main>
 
-                 <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
-                   <div class="small">Signed in as:</div>
-                   <div id="signedInAs" class="pill" style="padding:6px 10px;background:rgba(255,255,255,0.03);border-radius:999px"></div>
-                 </div>
-
-                 <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px">
-                   <div class="small">Your rating:</div>
-                   <div id="ratingStars" class="stars" role="radiogroup" aria-label="Rating stars"></div>
-                   <div style="flex:1"></div>
-                   <button id="submitRatingBtn">Submit</button>
-                 </div>
-
-                 <textarea id="comment" placeholder="Optional comment (public)"></textarea>
-
-                 <div style="height:12px"></div>
-
-                 <div style="display:flex;gap:12px;align-items:center">
-                   <div><div class="avg" id="avgScore">—</div> <div class="small">avg</div></div>
-                   <div class="small" id="ratingCount">— ratings</div>
-                   <div style="flex:1"></div>
-                   <button id="deleteMovie" class="ghost">Delete movie (admin)</button>
-                 </div>
-
-                 <div style="height:12px"></div>
-                 <div id="breakdown" class="small"></div>
-               </div>
-               -->
-        </main> <!-- Right column -->
-        <aside class="right">
-            <div class="card"> <button id="openTopRaters" style="
-      background: var(--accent);
-      color: #041820;
-      font-weight: 700;
-      border: none;
-      border-radius: 10px;
-      padding: 10px 16px;
-      cursor: pointer;
-      width: 100%;
-      transition: background 0.2s ease;
-   "> ⭐ View Top Raters </button> <!-- Popup modal (hidden by default) -->
-                <div id="topRatersModal" style="
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 9999;
-      background: rgba(15, 25, 40, 0.95);
-      border-radius: 16px;
-      padding: 20px;
-      min-width: 360px;
-      max-width: 90%;
-      max-height: 80%;
-      overflow-y: auto;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.7);
-   ">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"> <strong style="font-size:18px;">Top Raters</strong> <button id="closeTopRaters" style="
-            background:none;
-            color:var(--muted);
-            border:none;
-            font-size:22px;
-            cursor:pointer;
-         ">×</button> </div>
-                    <div class="small">Most contributions</div>
-                    <div style="height:12px"></div>
-                    <div class="top-raters" id="topRaters"></div>
-                </div>
-            </div>
-            <div style="height:12px"></div>
-            <div class="card"> <strong>How to write a review:</strong>
-                <pre class="small" style="white-space:pre-wrap">• Select the movie you want to review.
-• Click the "Leave a Rating" button.
-• Choose your rating from 1 to 10 stars.
-• Optionally, include a comment to share your thoughts.
-• Click "Submit Rating" to finalize your review.</pre>
-            </div>
-            <div style="height:12px"></div>
-            <div class="card"> <strong>Additional Information</strong>
-                <div style="height:8px"></div>
-                    <div class="small">How verification works:</div>
-                    <pre class="small" style="white-space:pre-wrap">• Sign in with Google.
-• Create high quality reviews.
-• Admins will periodically add new verified users.
-• Users listed there show a ✔ verified badge when signed in.</pre> <a href='https://www.free-counters.org/'>www.free-Counter.org</a>
-                    <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=784532d4e6654eba9bd92261f6bb3a72460355f1'></script>
-                    <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1423817/t/0"></script>
-            </div>
-        </aside>
-        <footer> © 2025 Movie Ratings • All Rights Reserved </footer>
+        <footer>© 2025 Movie Ratings • All Rights Reserved</footer>
     </div>
-    <script type="module">
 
+    <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-        import { getDatabase, ref, push, set, onValue, child, get, remove, query, orderByChild, limitToLast, update } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+        import { getDatabase, ref, onValue, child, get, update } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
         import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 
         const firebaseConfig = {
@@ -377,9 +277,7 @@
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
 
-        const uid = () => Math.random().toString(36).slice(2,9);
         const nowISO = () => new Date().toISOString();
-        const slugify = s => s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
         const escapeHtml = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
         const refs = {
@@ -389,39 +287,29 @@
           signedOutControls: document.getElementById('signedOutControls'),
           userName: document.getElementById('userName'),
           verifiedBadge: document.getElementById('verifiedBadge'),
-          addTitle: document.getElementById('newTitle'),
-          addYear: document.getElementById('newYear'),
-          addBtn: document.getElementById('addMovieBtn'),
           search: document.getElementById('searchInput'),
           sort: document.getElementById('sortSelect'),
           verifiedOnly: document.getElementById('verifiedOnly'),
           movieList: document.getElementById('movieList'),
-
-          avgScore: document.getElementById('avgScore'), 
-          ratingCount: document.getElementById('ratingCount'),
-          breakdown: document.getElementById('breakdown'),
-          deleteMovieBtn: document.getElementById('deleteMovie'),
-          topRaters: document.getElementById('topRaters'),
-          openTopRatersBtn: document.getElementById('openTopRaters'),
-        closeTopRatersBtn: document.getElementById('closeTopRaters'),
-        topRatersModal: document.getElementById('topRatersModal'),
-        modalBackdrop: document.getElementById('modalBackdrop'),
-          signedInAs: document.getElementById('signedInAs'),
-           editNameBtn: document.getElementById('editNameBtn'),
-        editNameModal: document.getElementById('editNameModal'),
-        editNameInput: document.getElementById('editNameInput'),
-        saveEditName: document.getElementById('saveEditName'),
-        cancelEditName: document.getElementById('cancelEditName'),
-        closeEditName: document.getElementById('closeEditName'),
-        editNameMsg: document.getElementById('editNameMsg'),
+          pagination: document.getElementById('pagination'),
+          editNameBtn: document.getElementById('editNameBtn'),
+          editNameModal: document.getElementById('editNameModal'),
+          editNameInput: document.getElementById('editNameInput'),
+          saveEditName: document.getElementById('saveEditName'),
+          cancelEditName: document.getElementById('cancelEditName'),
+          closeEditName: document.getElementById('closeEditName'),
+          editNameMsg: document.getElementById('editNameMsg'),
+          nav: document.getElementById('nav'),
         };
 
         let currentUser = null;
         let currentVerified = {};
-        let ratingsListeners = {}; 
-        let expandedFor = null;    
-        let expandedEl = null;     
+        let expandedFor = null;
+        let expandedEl = null;
         let pendingRating = 5;
+        let currentPage = 1;
+        const itemsPerPage = 8;
+        let allMovies = [];
 
         refs.signInBtn.addEventListener('click', async () => {
           try { await signInWithPopup(auth, provider); } catch (e) { console.error(e); alert('Sign-in failed: ' + e.message); }
@@ -434,103 +322,108 @@
             refs.signedOutControls.style.display = 'none';
             refs.signedInControls.style.display = 'flex';
             refs.userName.textContent = user.displayName || user.email || user.uid;
-            refs.signedInAs.textContent = (user.displayName || user.email || user.uid);
             checkVerified(user).then(v => renderVerifiedBadge(v));
           } else {
             refs.signedOutControls.style.display = 'flex';
             refs.signedInControls.style.display = 'none';
             refs.userName.textContent = '—';
-            refs.signedInAs.textContent = '';
             renderVerifiedBadge(false);
           }
+          updateNav();
         });
 
+        function updateNav() {
+          refs.nav.innerHTML = '';
+          const homeLink = document.createElement('a');
+          homeLink.href = 'index.html';
+          homeLink.textContent = '🏠 Home';
+          homeLink.classList.add('active');
+
+          const leaderboardLink = document.createElement('a');
+          leaderboardLink.href = 'leaderboard.html';
+          leaderboardLink.textContent = '⭐ Leaderboard';
+
+          refs.nav.appendChild(homeLink);
+          refs.nav.appendChild(leaderboardLink);
+
+          if (currentUser) {
+            checkVerified(currentUser).then(verified => {
+              if (verified) {
+                const addMovieLink = document.createElement('a');
+                addMovieLink.href = 'add-movie.html';
+                addMovieLink.textContent = '➕ Add Movie';
+                refs.nav.appendChild(addMovieLink);
+              }
+            });
+          }
+        }
+
         function showEditNameModal(prefill='') {
-        refs.editNameInput.value = prefill;
-        refs.editNameMsg.style.display = 'none';
-        refs.editNameModal.style.display = 'block';
-        refs.editNameInput.focus();
+          refs.editNameInput.value = prefill;
+          refs.editNameMsg.style.display = 'none';
+          refs.editNameModal.style.display = 'block';
+          refs.editNameInput.focus();
         }
         function hideEditNameModal() {
-        refs.editNameModal.style.display = 'none';
-        refs.editNameMsg.style.display = 'none';
-        refs.editNameInput.value = '';
+          refs.editNameModal.style.display = 'none';
+          refs.editNameMsg.style.display = 'none';
+          refs.editNameInput.value = '';
         }
 
         refs.editNameBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (!currentUser) return alert('Sign in first to change your display name.');
-
-        const current = currentUser.displayName || currentUser.email || '';
-        showEditNameModal(current);
+          e.stopPropagation();
+          if (!currentUser) return alert('Sign in first to change your display name.');
+          const current = currentUser.displayName || currentUser.email || '';
+          showEditNameModal(current);
         });
 
         refs.cancelEditName.addEventListener('click', (e) => { e.stopPropagation(); hideEditNameModal(); });
         refs.closeEditName.addEventListener('click', (e) => { e.stopPropagation(); hideEditNameModal(); });
 
-        document.addEventListener('click', (ev) => {
-        if (!refs.editNameModal) return;
-        if (refs.editNameModal.style.display === 'block') {
-        const rect = refs.editNameModal.getBoundingClientRect();
-
-        if (!(ev.clientX >= rect.left && ev.clientX <= rect.right && ev.clientY >= rect.top && ev.clientY <= rect.bottom)) {
-        hideEditNameModal();
-        }
-        }
-        });
-
         refs.saveEditName.addEventListener('click', async (ev) => {
-        ev.stopPropagation();
-        if (!currentUser) return alert('You must be signed in.');
-        const newName = refs.editNameInput.value.trim();
-        if (!newName) {
-        refs.editNameMsg.textContent = 'Please enter a name.';
-        refs.editNameMsg.style.display = '';
-        return;
-        }
-        if (newName.length < 2 || newName.length > 40) {
-        refs.editNameMsg.textContent = 'Name must be 2–40 characters.';
-        refs.editNameMsg.style.display = '';
-        return;
-        }
+          ev.stopPropagation();
+          if (!currentUser) return alert('You must be signed in.');
+          const newName = refs.editNameInput.value.trim();
+          if (!newName) {
+            refs.editNameMsg.textContent = 'Please enter a name.';
+            refs.editNameMsg.style.display = '';
+            return;
+          }
+          if (newName.length < 2 || newName.length > 40) {
+            refs.editNameMsg.textContent = 'Name must be 2–40 characters.';
+            refs.editNameMsg.style.display = '';
+            return;
+          }
 
-        try {
+          try {
+            await updateProfile(auth.currentUser, { displayName: newName });
+            await update(ref(db, `raterIndex/${currentUser.uid}`), { displayName: newName });
 
-        await updateProfile(auth.currentUser, { displayName: newName });
+            const moviesSnap = await get(ref(db, 'movies'));
+            const movies = moviesSnap.val() || {};
+            const movieIds = Object.keys(movies);
 
-        await update(ref(db, `raterIndex/${currentUser.uid}`), { displayName: newName });
+            refs.editNameMsg.textContent = 'Saving — updating your existing ratings...';
+            refs.editNameMsg.style.display = '';
+            for (const mid of movieIds) {
+              const rRef = ref(db, `ratings/${mid}`);
+              const rSnap = await get(rRef);
+              const ratings = rSnap.val() || {};
+              for (const [k, r] of Object.entries(ratings)) {
+                if (r && r.uid === currentUser.uid) {
+                  await update(child(rRef, k), { displayName: newName });
+                }
+              }
+            }
 
-        const moviesSnap = await get(moviesRoot());
-        const movies = moviesSnap.val() || {};
-        const movieIds = Object.keys(movies);
-
-        refs.editNameMsg.textContent = 'Saving — updating your existing ratings...';
-        refs.editNameMsg.style.display = '';
-        for (const mid of movieIds) {
-        const rRef = ratingsRoot(mid);
-        const rSnap = await get(rRef);
-        const ratings = rSnap.val() || {};
-        for (const [k, r] of Object.entries(ratings)) {
-        if (r && r.uid === currentUser.uid) {
-
-         await update(child(rRef, k), { displayName: newName });
-        }
-        }
-        }
-
-        refs.userName.textContent = newName;
-        refs.signedInAs && (refs.signedInAs.textContent = newName);
-
-        updateTopRaters();
-
-        refs.editNameMsg.textContent = 'Saved successfully!';
-
-        setTimeout(() => { hideEditNameModal(); }, 900);
-        } catch (err) {
-        console.error('Failed to update display name:', err);
-        refs.editNameMsg.textContent = 'Error: ' + (err.message || err);
-        refs.editNameMsg.style.display = '';
-        }
+            refs.userName.textContent = newName;
+            refs.editNameMsg.textContent = 'Saved successfully!';
+            setTimeout(() => { hideEditNameModal(); }, 900);
+          } catch (err) {
+            console.error('Failed to update display name:', err);
+            refs.editNameMsg.textContent = 'Error: ' + (err.message || err);
+            refs.editNameMsg.style.display = '';
+          }
         });
 
         function watchVerifiedList() {
@@ -542,21 +435,6 @@
         }
         watchVerifiedList();
 
-        refs.openTopRatersBtn.addEventListener('click', () => {
-          refs.topRatersModal.style.display = 'block';
-          refs.modalBackdrop.style.display = 'block';
-        });
-
-        refs.closeTopRatersBtn.addEventListener('click', () => {
-          refs.topRatersModal.style.display = 'none';
-          refs.modalBackdrop.style.display = 'none';
-        });
-
-        refs.modalBackdrop.addEventListener('click', () => {
-          refs.topRatersModal.style.display = 'none';
-          refs.modalBackdrop.style.display = 'none';
-        });
-
         async function checkVerified(user) {
           if (!user) return false;
           const uidKey = user.uid;
@@ -566,161 +444,24 @@
           if (currentVerified[user.email]) return true;
           return false;
         }
+
         function renderVerifiedBadge(isVerified) {
           refs.verifiedBadge.innerHTML = isVerified ? '<div class="badge">✔ Verified</div>' : '';
         }
 
-        function movieRef(movieId){ return ref(db, `movies/${movieId}`); }
-        function moviesRoot(){ return ref(db, 'movies'); }
-        function ratingsRoot(movieId){ return ref(db, `ratings/${movieId}`); }
-        function raterIndexRef(uid){ return ref(db, `raterIndex/${uid}`); }
-
-        function listenMovies() {
-          const mRef = moviesRoot();
-          onValue(mRef, snapshot => {
-            const val = snapshot.val() || {};
-            renderMovieList(Object.values(val));
-          });
-        }
-        listenMovies();
-
-        function attachRatingsListener(movieId) {
-          if (ratingsListeners[movieId]) return; 
-          const rRef = ratingsRoot(movieId);
-          const unsub = onValue(rRef, snapshot => {
-
-            if (expandedFor === movieId) updateExpandedPanel(movieId, snapshot.val());
-
-            updateTopRaters();
-          });
-
-          ratingsListeners[movieId] = true;
-        }
-
-        refs.addBtn.addEventListener('click', async () => {
-        const title = refs.addTitle.value.trim();
-        const year = refs.addYear.value.trim();
-        if (!title) return alert('Please enter a movie title.');
-
-        if (!currentUser) {
-        return alert('You must be signed in to add a movie.');
-        }
-
-        const verified = await checkVerified(currentUser);
-        if (!verified) {
-        return alert('Only verified users can add new movies to the database.');
-        }
-
-        const slug = slugify(title + (year ? '-' + year : ''));
-        const id = slug;
-        const mRef = movieRef(id);
-        const snapshot = await get(mRef);
-
-        if (!snapshot.exists()) {
-        const poster = document.getElementById('newPoster').value.trim();
-        await set(mRef, {
-        id,
-        title,
-        year,
-        slug,
-        poster,
-        createdAt: nowISO(),
-        addedBy: currentUser.uid,
-        verifiedAdder: true
-        });
-        }
-
-        attachRatingsListener(id);
-        refs.addTitle.value = '';
-        refs.addYear.value = '';
-        });
-
-        refs.deleteMovieBtn && refs.deleteMovieBtn.addEventListener('click', async () => {
-          if (!expandedFor) return alert('Select a movie first.');
-          if (!currentUser) return alert('Sign in as an admin to delete movies.');
-          const verified = await checkVerified(currentUser);
-          if (!verified) return alert('Only verified admins may delete movies.');
-          if (!confirm('Delete movie and all its ratings? This cannot be undone.')) return;
-          await remove(movieRef(expandedFor));
-          await remove(ratingsRoot(expandedFor));
-          closeExpandedPanel();
-        });
-
-        async function renderMovieList(movieArr) {
-          const q = refs.search.value.trim().toLowerCase();
-          const onlyVerified = refs.verifiedOnly.checked;
-          let arr = (movieArr||[]).slice();
-          if (q) arr = arr.filter(m => (m.title + ' ' + (m.year||'')).toLowerCase().includes(q));
-
-          const withStats = await Promise.all(arr.map(async m => {
-            const ratingsSnap = await get(ratingsRoot(m.id));
-            const ratings = ratingsSnap.val() || {};
-            const vals = Object.values(ratings).map(r=>r.score || 0);
-            const count = vals.length;
-            const avg = count ? Math.round((vals.reduce((a,b)=>a+b,0)/count)*100)/100 : 0;
-            const breakdown = {};
-            for (let i=1;i<=10;i++) breakdown[i] = 0;
-            Object.values(ratings).forEach(r => { breakdown[r.score] = (breakdown[r.score]||0)+1; });
-            const hasVerified = Object.values(ratings).some(r => r.verified);
-            return {...m, stats:{avg,count,breakdown,hasVerified}};
-          }));
-
-          let final = withStats;
-          if (onlyVerified) final = final.filter(m => m.stats.hasVerified);
-          const sort = refs.sort.value;
-          final.sort((a,b) => {
-            if (sort === 'recent') return new Date(b.createdAt) - new Date(a.createdAt);
-            if (sort === 'avg') return (b.stats.avg||0) - (a.stats.avg||0);
-            if (sort === 'count') return (b.stats.count||0) - (a.stats.count||0);
-            if (sort === 'title') return a.title.localeCompare(b.title);
-            return 0;
-          });
-
-          refs.movieList.innerHTML = '';
-          if (final.length === 0) {
-            refs.movieList.innerHTML = '<div class="small" style="padding:12px">No movies yet. Add one above.</div>';
-            return;
-          }
-
-          for (const m of final) {
-
-            const row = document.createElement('div');
-            row.className = 'movie-row card';
-            row.setAttribute('data-movie-id', m.id);
-            const posterHtml = m.poster 
-        ? `<img src="${escapeHtml(m.poster)}" alt="Poster for ${escapeHtml(m.title)}" class="poster-img" />`
-        : `<div class="poster" aria-hidden="true">${escapeHtml(m.title.split(' ').map(s=>s[0]).slice(0,2).join(''))}</div>`;
-
-        row.innerHTML = `
-        ${posterHtml}
-              <div class="meta">
-                <div class="title-row">
-                  <div style="min-width:0">
-                    <div class="movie-title">${escapeHtml(m.title)} ${m.year?'<span class="small">('+escapeHtml(m.year)+')</span>':''}</div>
-                    <div class="small">Added ${new Date(m.createdAt).toLocaleString()}</div>
-                  </div>
-                  <div style="text-align:right">
-                    <div class="avg">${m.stats.count ? m.stats.avg : '—'}</div>
-                    <div class="small">${m.stats.count} ratings</div>
-                  </div>
-                </div>
-              </div>
-            `;
-
-            row.addEventListener('click', (e) => {
-
-              const id = m.id;
-
-              if (expandedFor === id) { closeExpandedPanel(); return; }
-
-              openExpandedUnderRow(row, m);
-            });
-
-            refs.movieList.appendChild(row);
-
-            if (expandedFor === m.id && expandedEl) {
-              refs.movieList.appendChild(expandedEl);
-            }
+        function renderStars(container, onSelect, value=8) {
+          container.innerHTML = '';
+          for (let i=1;i<=10;i++){
+            const s = document.createElement('div');
+            s.className = 'star ' + (i <= value ? 'on' : '');
+            s.tabIndex = 0;
+            s.setAttribute('role','radio');
+            s.setAttribute('aria-checked', i===value ? 'true' : 'false');
+            s.title = i + '/10';
+            s.textContent = '★';
+            s.addEventListener('click', ()=>{ onSelect(i); renderStars(container,onSelect,i); });
+            s.addEventListener('keydown', (e)=>{ if (e.key === 'Enter' || e.key === ' ') { onSelect(i); renderStars(container,onSelect,i); } });
+            container.appendChild(s);
           }
         }
 
@@ -740,25 +481,20 @@
                 <div class="small expanded-signed-in">${escapeHtml(currentUser?.displayName || currentUser?.email || '—')}</div>
               </div>
             </div>
-
             <div style="height:12px"></div>
-
             <div class="expanded-stats small">
-        <div class="summary">
-        <div>
-        <div class="avg expanded-avg">—</div>
-        <div class="small">avg</div>
-        </div>
-        <div class="small expanded-count">— ratings</div>
-        <div style="flex:1"></div>
-        <button class="ghost expanded-leave-btn">Leave a Rating</button>
-        </div>
-        <div class="expanded-breakdown"></div>
-        </div>
-
+              <div class="summary">
+                <div>
+                  <div class="avg expanded-avg">—</div>
+                  <div class="small">avg</div>
+                </div>
+                <div class="small expanded-count">— ratings</div>
+                <div style="flex:1"></div>
+                <button class="ghost expanded-leave-btn">Leave a Rating</button>
+              </div>
+              <div class="expanded-breakdown"></div>
+            </div>
             <div style="height:12px"></div>
-
-            <!-- Hidden rating form that appears only when user clicks "Leave a rating" -->
             <div class="expanded-form" style="display:none">
               <div style="display:flex;gap:8px;align-items:center">
                 <div class="small">Your rating:</div>
@@ -769,21 +505,16 @@
               </div>
               <textarea class="expanded-comment" placeholder="Optional comment (public)"></textarea>
             </div>
-
             <div style="height:12px"></div>
-
             <div class="expanded-list small" style="max-height:260px;overflow:auto;border-top:1px dashed rgba(255,255,255,0.03);padding-top:8px"></div>
           `;
 
           container.querySelector('.expanded-leave-btn').addEventListener('click', (e) => {
             e.stopPropagation();
-
             if (!currentUser) return alert('Please sign in to leave a rating.');
-
             container.querySelector('.expanded-form').style.display = 'flex';
             container.querySelector('.expanded-leave-btn').style.display = 'none';
             const starsContainer = container.querySelector('.stars-container');
-
             pendingRating = 5;
             renderStars(starsContainer, v => pendingRating = v, pendingRating);
           });
@@ -801,7 +532,7 @@
             if (!movieId) return alert('No movie selected.');
             if (!pendingRating || pendingRating < 1 || pendingRating > 10) return alert('Select a rating between 1–10.');
             const comment = container.querySelector('.expanded-comment').value.trim();
-            const ratingsRef = ratingsRoot(movieId);
+            const ratingsRef = ref(db, `ratings/${movieId}`);
 
             const snapshot = await get(ratingsRef);
             const ratings = snapshot.val() || {};
@@ -822,12 +553,12 @@
               await update(child(ratingsRef, existingKey), ratingData);
               alert('Your previous rating has been updated!');
             } else {
-              const ratingId = uid();
-              await set(child(ratingsRef, ratingId), ratingData);
-              const rIndexRef = raterIndexRef(currentUser.uid);
+              const ratingId = Math.random().toString(36).slice(2,9);
+              await update(ratingsRef, { [ratingId]: ratingData });
+              const rIndexRef = ref(db, `raterIndex/${currentUser.uid}`);
               const rIndexSnap = await get(rIndexRef);
               const oldCount = (rIndexSnap.val() && rIndexSnap.val().count) || 0;
-              await set(rIndexRef, {
+              await update(rIndexRef, {
                 displayName: currentUser.displayName || currentUser.email || currentUser.uid,
                 email: currentUser.email || '',
                 count: oldCount + 1
@@ -843,24 +574,7 @@
           return container;
         }
 
-        async function openExpandedUnderRow(rowEl, movie) {
-
-          closeExpandedPanel();
-
-          const panel = createExpandedDOM(movie);
-
-          if (rowEl.nextSibling) rowEl.parentNode.insertBefore(panel, rowEl.nextSibling);
-          else rowEl.parentNode.appendChild(panel);
-
-          expandedFor = movie.id;
-          expandedEl = panel;
-
-          attachRatingsListener(movie.id);
-          const snap = await get(ratingsRoot(movie.id));
-          updateExpandedPanel(movie.id, snap.val());
-        }
-
-        function updateExpandedPanel(movieId, ratingsVal) {
+        async function updateExpandedPanel(movieId, ratingsVal) {
           if (!expandedEl || expandedFor !== movieId) return;
           const container = expandedEl;
           const ratings = ratingsVal || {};
@@ -890,30 +604,18 @@
             listEl.innerHTML = '<div class="small">No ratings yet.</div>';
           } else {
             entries.forEach(r => {
-        const e = document.createElement('div');
-        e.className = 'rating-item';
-        e.innerHTML = `
-        <div class="avatar">${escapeHtml((r.displayName||r.email||r.uid).slice(0,2).toUpperCase())}</div>
-        <div style="flex:1">
-        <div style="font-weight:700">${escapeHtml(r.displayName || r.email || r.uid)} <span class="small">• ${new Date(r.createdAt).toLocaleString()}</span></div>
-        <div class="small">Score: ${r.score}/10 ${r.verified ? '<span class="badge">✔</span>' : ''}</div>
-        ${r.comment ? `<div style="margin-top:6px">${escapeHtml(r.comment)}</div>` : ''}
-        </div>
-        `;
-        listEl.appendChild(e);
-        });
-          }
-
-          if (currentUser) {
-            const existing = Object.values(ratings).find(rr => rr.uid === currentUser.uid);
-            if (existing) {
-
-              container.querySelector('.expanded-leave-btn').dataset.prefillScore = existing.score;
-              container.querySelector('.expanded-leave-btn').dataset.prefillComment = existing.comment || '';
-            } else {
-              container.querySelector('.expanded-leave-btn').dataset.prefillScore = '';
-              container.querySelector('.expanded-leave-btn').dataset.prefillComment = '';
-            }
+              const e = document.createElement('div');
+              e.className = 'rating-item';
+              e.innerHTML = `
+                <div class="avatar">${escapeHtml((r.displayName||r.email||r.uid).slice(0,2).toUpperCase())}</div>
+                <div style="flex:1">
+                  <div style="font-weight:700">${escapeHtml(r.displayName || r.email || r.uid)} <span class="small">• ${new Date(r.createdAt).toLocaleString()}</span></div>
+                  <div class="small">Score: ${r.score}/10 ${r.verified ? '<span class="badge">✔</span>' : ''}</div>
+                  ${r.comment ? `<div style="margin-top:6px">${escapeHtml(r.comment)}</div>` : ''}
+                </div>
+              `;
+              listEl.appendChild(e);
+            });
           }
         }
 
@@ -924,59 +626,143 @@
           expandedFor = null;
         }
 
-        function renderStars(container, onSelect, value=8) {
-          container.innerHTML = '';
-          for (let i=1;i<=10;i++){
-            const s = document.createElement('div');
-            s.className = 'star ' + (i <= value ? 'on' : '');
-            s.tabIndex = 0;
-            s.setAttribute('role','radio');
-            s.setAttribute('aria-checked', i===value ? 'true' : 'false');
-            s.title = i + '/10';
-            s.textContent = '★';
-            s.addEventListener('click', ()=>{ onSelect(i); renderStars(container,onSelect,i); });
-            s.addEventListener('keydown', (e)=>{ if (e.key === 'Enter' || e.key === ' ') { onSelect(i); renderStars(container,onSelect,i); } });
-            container.appendChild(s);
+        async function renderMovieList() {
+          const q = refs.search.value.trim().toLowerCase();
+          const onlyVerified = refs.verifiedOnly.checked;
+          const sort = refs.sort.value;
+
+          let mSnap = await get(ref(db, 'movies'));
+          let arr = Object.values(mSnap.val() || {});
+
+          if (q) arr = arr.filter(m => (m.title + ' ' + (m.year||'')).toLowerCase().includes(q));
+
+          const withStats = await Promise.all(arr.map(async m => {
+            const ratingsSnap = await get(ref(db, `ratings/${m.id}`));
+            const ratings = ratingsSnap.val() || {};
+            const vals = Object.values(ratings).map(r=>r.score || 0);
+            const count = vals.length;
+            const avg = count ? Math.round((vals.reduce((a,b)=>a+b,0)/count)*100)/100 : 0;
+            const breakdown = {};
+            for (let i=1;i<=10;i++) breakdown[i] = 0;
+            Object.values(ratings).forEach(r => { breakdown[r.score] = (breakdown[r.score]||0)+1; });
+            const hasVerified = Object.values(ratings).some(r => r.verified);
+            return {...m, stats:{avg,count,breakdown,hasVerified}};
+          }));
+
+          let final = withStats;
+          if (onlyVerified) final = final.filter(m => m.stats.hasVerified);
+
+          final.sort((a,b) => {
+            if (sort === 'recent') return new Date(b.createdAt) - new Date(a.createdAt);
+            if (sort === 'avg') return (b.stats.avg||0) - (a.stats.avg||0);
+            if (sort === 'count') return (b.stats.count||0) - (a.stats.count||0);
+            if (sort === 'title') return a.title.localeCompare(b.title);
+            return 0;
+          });
+
+          allMovies = final;
+          currentPage = 1;
+          renderPage();
+        }
+
+        function renderPage() {
+          refs.movieList.innerHTML = '';
+          if (allMovies.length === 0) {
+            refs.movieList.innerHTML = '<div class="small" style="padding:12px">No movies yet. Come back later!</div>';
+            refs.pagination.innerHTML = '';
+            return;
+          }
+
+          const totalPages = Math.ceil(allMovies.length / itemsPerPage);
+          const start = (currentPage - 1) * itemsPerPage;
+          const end = start + itemsPerPage;
+          const pageMovies = allMovies.slice(start, end);
+
+          pageMovies.forEach(m => {
+            const row = document.createElement('div');
+            row.className = 'movie-row card';
+            row.setAttribute('data-movie-id', m.id);
+            const posterHtml = m.poster 
+              ? `<img src="${escapeHtml(m.poster)}" alt="Poster for ${escapeHtml(m.title)}" class="poster-img" />`
+              : `<div class="poster" aria-hidden="true">${escapeHtml(m.title.split(' ').map(s=>s[0]).slice(0,2).join(''))}</div>`;
+
+            row.innerHTML = `
+              ${posterHtml}
+              <div class="meta">
+                <div class="title-row">
+                  <div style="min-width:0">
+                    <div class="movie-title">${escapeHtml(m.title)} ${m.year?'<span class="small">('+escapeHtml(m.year)+')</span>':''}</div>
+                    <div class="small">Added ${new Date(m.createdAt).toLocaleString()}</div>
+                  </div>
+                  <div style="text-align:right">
+                    <div class="avg">${m.stats.count ? m.stats.avg : '—'}</div>
+                    <div class="small">${m.stats.count} rating${m.stats.count !== 1 ? 's' : ''}</div>
+                  </div>
+                </div>
+              </div>
+            `;
+
+            row.addEventListener('click', async () => {
+              if (expandedFor === m.id) { closeExpandedPanel(); return; }
+              closeExpandedPanel();
+              const panel = createExpandedDOM(m);
+              row.parentNode.insertBefore(panel, row.nextSibling);
+              expandedFor = m.id;
+              expandedEl = panel;
+
+              const snap = await get(ref(db, `ratings/${m.id}`));
+              updateExpandedPanel(m.id, snap.val());
+
+              const ratingsRef = ref(db, `ratings/${m.id}`);
+              onValue(ratingsRef, (snapshot) => {
+                if (expandedFor === m.id) updateExpandedPanel(m.id, snapshot.val());
+              });
+            });
+
+            refs.movieList.appendChild(row);
+          });
+
+          // Render pagination
+          refs.pagination.innerHTML = '';
+          if (totalPages <= 1) return;
+
+          if (currentPage > 1) {
+            const prevBtn = document.createElement('button');
+            prevBtn.textContent = '← Previous';
+            prevBtn.addEventListener('click', () => { currentPage--; renderPage(); });
+            refs.pagination.appendChild(prevBtn);
+          }
+
+          for (let i = 1; i <= totalPages; i++) {
+            if (i === currentPage) {
+              const span = document.createElement('span');
+              span.textContent = i;
+              refs.pagination.appendChild(span);
+            } else {
+              const btn = document.createElement('button');
+              btn.textContent = i;
+              if (i === currentPage) btn.classList.add('active');
+              btn.addEventListener('click', () => { currentPage = i; renderPage(); });
+              refs.pagination.appendChild(btn);
+            }
+          }
+
+          if (currentPage < totalPages) {
+            const nextBtn = document.createElement('button');
+            nextBtn.textContent = 'Next →';
+            nextBtn.addEventListener('click', () => { currentPage++; renderPage(); });
+            refs.pagination.appendChild(nextBtn);
           }
         }
 
-        function updateTopRaters() {
-          const rRef = ref(db, 'raterIndex');
-          onValue(rRef, snapshot => {
-            const val = snapshot.val() || {};
-            const arr = Object.entries(val).map(([uid, data]) => ({ uid, ...data }));
-            arr.sort((a,b) => (b.count||0) - (a.count||0));
-            refs.topRaters.innerHTML = '';
-            if (arr.length === 0) {
-              refs.topRaters.innerHTML = '<div class="small">No raters yet.</div>';
-              return;
-            }
-            arr.slice(0,8).forEach(r => {
-              const el = document.createElement('div');
-              el.className = 'rater';
-              el.innerHTML = `<div class="avatar">${escapeHtml((r.displayName||r.email||r.uid).slice(0,2).toUpperCase())}</div>
-              <div style="flex:1">
-                <div style="font-weight:700">${escapeHtml(r.displayName || r.email || r.uid)}</div>
-                <div class="small">${r.count || 0} ratings</div>
-              </div>
-              <div>${currentVerified[r.uid] || currentVerified[(r.email||'').replace('.', '_dot_')] || currentVerified[r.email] ? '<div class="badge">✔</div>' : ''}</div>`;
-              refs.topRaters.appendChild(el);
-            });
-          });
-        }
-        updateTopRaters();
+        refs.search.addEventListener('input', renderMovieList);
+        refs.sort.addEventListener('change', renderMovieList);
+        refs.verifiedOnly.addEventListener('change', renderMovieList);
 
-        refs.search.addEventListener('input', async () => { const mSnap = await get(moviesRoot()); renderMovieList(Object.values(mSnap.val()||{})); });
-        refs.sort.addEventListener('change', async () => { const mSnap = await get(moviesRoot()); renderMovieList(Object.values(mSnap.val()||{})); });
-        refs.verifiedOnly.addEventListener('change', async () => { const mSnap = await get(moviesRoot()); renderMovieList(Object.values(mSnap.val()||{})); });
+        const mRef = ref(db, 'movies');
+        onValue(mRef, renderMovieList);
 
-        (async function init() {
-          const mSnap = await get(moviesRoot());
-          renderMovieList(Object.values(mSnap.val()||{}));
-        })();
-
-        refs.addTitle.addEventListener('keydown', (e)=>{ if (e.key === 'Enter') refs.addBtn.click(); });
-
+        updateNav();
     </script>
 </body>
 
