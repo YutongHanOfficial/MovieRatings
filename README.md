@@ -2,7 +2,7 @@
 The supreme movie rating platform where users can share, rate, and discover the best films in cinema. Join a community of passionate movie lovers and explore ratings, reviews, and insightful discussions on your favorite movies.
 
 ## Copyright
-© 2025 Movie Ratings. All rights reserved.
+© 2026 Movie Ratings. All rights reserved.
 The content, design, and features of this platform are protected by copyright law and are owned by Movie Ratings, a subsidiary of Yutong Studios. Unauthorized use, reproduction, or distribution of any content from this platform is prohibited.
 
 ## Attributions
